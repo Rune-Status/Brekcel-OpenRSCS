@@ -15,7 +15,7 @@ namespace OpenRSCS.utils {
                 buf.Read(bytes, 0, bytes.Length);
                 Write(bytes, 0, bytes.Length);
                 flip();
-            } catch(Exception e) {
+            } catch (Exception e) {
                 Console.WriteLine(e);
             } finally {
                 buf.BaseStream.Position = initPos;
@@ -30,7 +30,7 @@ namespace OpenRSCS.utils {
                 buf.Read(bytes, 0, bytes.Length);
                 Write(bytes, 0, bytes.Length);
                 flip();
-            } catch(Exception e) {
+            } catch (Exception e) {
                 Console.WriteLine(e);
             } finally {
                 buf.Position = initPos;
@@ -75,7 +75,7 @@ namespace OpenRSCS.utils {
         }
 
         public short getUShort() {
-            return getShort();
+            return (short)(getShort() & 0xFFFF);
         }
 
         public int getMedium() {
@@ -87,7 +87,7 @@ namespace OpenRSCS.utils {
         }
 
         public int getSmartInt() {
-            if(get(Position) < 0) // Has a warning but I'm too scared to touch. 
+            if (get(Position) < 0) // Has a warning but I'm too scared to touch. 
                 return getInt() & 0x7fffffff;
 
             return getShort() & 0xFFFF;
@@ -98,7 +98,7 @@ namespace OpenRSCS.utils {
         }
 
         public void getBytes(byte[] data, int offset, int length) {
-            for(int i = 0; i < length; i++) {
+            for (int i = 0; i < length; i++) {
                 data[i + offset] = get();
             }
         }
@@ -110,7 +110,7 @@ namespace OpenRSCS.utils {
         public void put(byte[] buffer, int offset, int dataSize) {
             try {
                 Write(buffer, offset, dataSize);
-            } catch(OutOfMemoryException e) {
+            } catch (OutOfMemoryException e) {
                 Console.WriteLine(e);
                 Console.WriteLine("Cap: " + Capacity);
                 Console.WriteLine("Position: " + Position);
@@ -123,13 +123,29 @@ namespace OpenRSCS.utils {
             sbyte[] buffer = Array.ConvertAll(ToArray(), b => (sbyte)b);
             sb.Append(buffer.Length);
             sb.Append(" [");
-            foreach(sbyte t in buffer) {
+            foreach (sbyte t in buffer) {
                 sb.Append(t);
                 sb.Append(", ");
             }
 
             sb.Append("]");
             return sb.ToString();
+        }
+
+        public ByteBuffer clone() {
+            return new ByteBuffer(this, 0, (int)Length);
+        }
+
+        public int getSmartA() {
+            int peek = get(Position) & 0xFF;
+            if (peek < 128)
+                return (get() & 0xFF) - 64;
+            return (getShort() & 0xFFFF) - 49152;
+
+        }
+
+        public void position(int pos) {
+            Position = pos;
         }
 
     }

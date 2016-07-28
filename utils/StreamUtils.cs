@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Text;
 
 namespace OpenRSCS.utils {
     public class StreamUtils {
@@ -15,6 +16,20 @@ namespace OpenRSCS.utils {
             for(int i = 0; i < arr.Length; i++) {
                 arr[i] = (sbyte)stream.ReadByte();
             }
+        }
+
+        public static string printArray<T>(T[] bytes) {
+            StringBuilder sb = new StringBuilder("Length: ");
+            sb.Append(bytes.Length);
+            sb.Append(" [");
+            foreach (T t in bytes) {
+                sb.Append(t);
+                sb.Append(", ");
+            }
+
+            sb.Remove(sb.Length - 2, 2);
+            sb.Append("]");
+            return sb.ToString();
         }
 
         /*public static MemoryStream readerToStream(BinaryReader buf, int offset, int size) {
