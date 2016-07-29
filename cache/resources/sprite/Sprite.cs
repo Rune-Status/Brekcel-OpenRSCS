@@ -14,6 +14,15 @@ namespace OpenRSCS.cache.resources.sprite {
          */
         public const int FLAG_ALPHA = 0x02;
         /**
+         * The height of this sprite.
+         */
+        private readonly int height;
+        private readonly int[][,] rgbData;
+        /**
+	 * The width of this sprite.
+	 */
+        private readonly int width;
+        /**
          * Decodes the {@link Sprite} from the specified {@link ByteBuffer}.
          * 
          * @param buffer
@@ -109,16 +118,6 @@ namespace OpenRSCS.cache.resources.sprite {
                 }
             }
         }
-
-        private readonly int[][,] rgbData;
-        /**
-	 * The width of this sprite.
-	 */
-        private readonly int width;
-        /**
-         * The height of this sprite.
-         */
-        private readonly int height;
 
         public int[,] getData(int height) {
             return rgbData[height];

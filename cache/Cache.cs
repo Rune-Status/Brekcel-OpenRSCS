@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using OpenRSCS.utils;
 using OpenRSCS.cache.enums;
+using OpenRSCS.utils;
 using OpenRSCS.utils.crypto;
 
 namespace OpenRSCS.cache {

@@ -22,7 +22,7 @@ namespace OpenRSCS.utils {
             StringBuilder sb = new StringBuilder("Length: ");
             sb.Append(bytes.Length);
             sb.Append(" [");
-            foreach (T t in bytes) {
+            foreach(T t in bytes) {
                 sb.Append(t);
                 sb.Append(", ");
             }

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using OpenRSCS.utils;
 using OpenRSCS.cache.enums;
+using OpenRSCS.utils;
 
 namespace OpenRSCS.cache {
     public class ReferenceTable {
@@ -74,39 +74,39 @@ namespace OpenRSCS.cache {
             foreach(int id in ids) {
                 entries.Add(id, new Entry(index++));
             }
-            
+
             if((flags & FLAG_IDENTIFIERS) != 0) {
                 foreach(int id in ids)
                     entries[id].setIdentifier(buf.getInt());
             }
-            
+
             foreach(int id in ids) {
                 entries[id].setCrc(buf.getInt());
             }
-            
+
             if((flags & FLAG_HASH) != 0) {
                 foreach(int id in ids) {
                     entries[id].setHash(buf.getInt());
                 }
             }
-            
+
             if((flags & FLAG_WHIRLPOOL) != 0) {
                 foreach(int id in ids) {
                     buf.getBytes(entries[id].whirlpool);
                 }
             }
-            
+
             if((flags & FLAG_SIZES) != 0) {
                 foreach(int id in ids) {
                     entries[id].compressed = buf.getInt();
                     entries[id].uncompressed = buf.getInt();
                 }
             }
-            
+
             foreach(int id in ids) {
                 entries[id].setVersion(buf.getInt());
             }
-            
+
             int[][] members = new int[size][];
             foreach(int id in ids) {
                 int test = format >= 7 ? buf.getSmartInt() : buf.getShort();

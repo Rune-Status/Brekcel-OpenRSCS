@@ -100,9 +100,10 @@ namespace OpenRSCS.cache {
          * @throws IOException
          *             if an I/O error occurs.
          */
-          public ByteBuffer read(CacheIndex index, CacheIndex archive) {
-              return read((int)index, (int) archive);
-          }
+
+        public ByteBuffer read(CacheIndex index, CacheIndex archive) {
+            return read((int)index, (int)archive);
+        }
 
         /**
          * Reads a file.

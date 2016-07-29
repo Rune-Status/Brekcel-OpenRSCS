@@ -66,6 +66,14 @@ namespace OpenRSCS.utils {
             return retVal;
         }
 
+        public int getSmartB() {
+            int i = GetBuffer()[Position] & 0xff;
+            if (i < 128)
+                return get();
+
+            return getUnsignedLEShort() - 32768;
+        }
+
         public sbyte getSByte() {
             return (sbyte)get();
         }
@@ -140,8 +148,21 @@ namespace OpenRSCS.utils {
             int peek = get(Position) & 0xFF;
             if (peek < 128)
                 return (get() & 0xFF) - 64;
+
             return (getShort() & 0xFFFF) - 49152;
 
+        }
+
+        public int getUnsignedLEShort() {
+            Position += 2;
+            return ((GetBuffer()[Position - 2] & 0xff) << 8) + (GetBuffer()[Position - 1] & 0xff);
+        }
+
+        public int getUnsignedSmart() {
+            int peek = get(Position) & 0xFF;
+            if (peek < 128)
+                return get() & 0xFF;
+            return (getShort() & 0xFFFF) - 32768;
         }
 
         public void position(int pos) {
